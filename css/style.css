@@ -102,7 +102,7 @@ li {
 
 .reverse {
   transform: rotateX(180deg);
-  transition-duration: 1.5s;
+  transition-duration: 2s;
 }
 
 textarea {
@@ -113,12 +113,9 @@ textarea {
   padding: 5px;
 }
 
-input#startButton {
-  width: 20%;
-  margin: 20px auto;
+button {
   background-color: #499ebb;
-  display: block;
-  padding: 5px auto;
+  padding: 0 5px;
   font-size: 40px;
   text-decoration: none;
   color: #fff;

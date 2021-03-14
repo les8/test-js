@@ -1,48 +1,52 @@
 const startButton = document.getElementById("startButton")
 const textarea = document.getElementById("textarea")
-let reverse = document.getElementsByTagName("li")
-let x = 0
-let y = 1
-let z = 1
+const reverse = document.getElementsByTagName("li")
+const revArr = [...reverse]
 
-startButton.onclick = start
-
-function start() {      
-    textarea.innerHTML = ""
-    textarea.innerHTML += "--- PROGRESS START ---\n"
-    startButton.value = "in progress"
-    startButton.style.width = "30%"
-    setInterval(animation, 500)
+let zeroCondition = {
+    x: 0,
+    z: 1,
+    y: 1 
 }
 
-function animation() {
-    if(x < reverse.length) {    
-        reverse[x].className += "reverse"
-        reverse[x].addEventListener("transitionstart", ontransitionstart)
-        reverse[x].addEventListener("transitionend", ontransitionend)
-        x++        
+startButton.addEventListener("click", start)
+
+function start() {        
+    startButton.removeEventListener("click", start)          
+    textarea.innerHTML = "--- PROGRESS START ---\n"
+    startButton.innerHTML = "in progress"
+    setInterval(animation, 300)
+    revArr.forEach(item => {      
+        item.addEventListener("transitionstart", ontransitionstart)
+        item.addEventListener("transitionend", ontransitionend)
+    });
+}
+
+function animation() {    
+    if(zeroCondition.x < revArr.length) {    
+        revArr[zeroCondition.x].classList.add("reverse")
+        zeroCondition.x++        
     }    
 }
 
-function ontransitionstart(){    
-    textarea.innerHTML += "Cell " + [y] + " animation START\n"
+function ontransitionstart(){        
+    textarea.innerHTML += "Cell " + zeroCondition.y + " animation START\n"
     textarea.scrollTop = textarea.scrollHeight;
-    y++
+    zeroCondition.y++
 }
 
-function ontransitionend(){
-    textarea.innerHTML += "Cell " + [z] + " animation END\n"
+function ontransitionend(){        
+    textarea.innerHTML += "Cell " + zeroCondition.z + " animation END\n"
     textarea.scrollTop = textarea.scrollHeight;
-    z++
-    if(z == reverse.length + 1) {        
+    zeroCondition.z++
+    if(zeroCondition.z == revArr.length + 1) {        
         textarea.innerHTML += "--- PROGRESS END ---"
-        startButton.value = "start"
-        startButton.style.width = "20%"
+        startButton.innerHTML = "start"
         setTimeout(success, 10)
     }    
 }
 
 function success () {
     alert("success")
-    window.location.reload()
+    window.location.reload() 
 }
